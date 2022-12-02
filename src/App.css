@@ -1,38 +1,238 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  display: grid;
+  grid-template-areas:
+    'header'
+    'main';
+  background-color: #e8eef8;
+  /* width: 100%;
+  height: 100%; */
+  grid-auto-rows: minmax(100px, auto);
+  grid-area: 100%;
 }
+
+.corpo {
+  margin-right: 5%;
+  margin-left: 5%;
+  font-size: 0.7em;
+  color: #000000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  grid-area: main;
+  /* border: 1px solid black; */
+
+
+}
+
+.centralizar {
+
+  display: flex;
+  justify-content: center;
+}
+
+.showContainer {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-size: 20px;
+  font-style: italic;
+  /* margin-bottom: -50vmin; */
+  justify-content: center;
+}
+
+
+.login {
+  text-align: center;
+  min-height: 100vh;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0052f5;
+}
+
+#top3Artists {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  background-color: #eb240a;
+}
+
+
+
+.botao {
+
+  padding: 0.3em;
+  transition: all 200ms;
+  color: #000000;
+  border-color: #000000;
+  position: relative;
+  border-radius: 9999em;
+  margin-left: 0 auto;
+  margin-right: auto;
+  font-size: 17px;
+  font-family: inherit;
+  background: #faf9f9;
+  border-width: 1px;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  margin: 1em 1% 2em 1%;
+}
+
+.botao:hover {
+  transition: all 200ms;
+  background-color: #ffffff;
+  box-shadow: 4px 4px teal;
+  position: relative;
+
+  background: #caf3f8;
+}
+
+article {
+  display: inline-block;
+  width: 30%;
+  box-sizing: border-box;
+  margin-top: 0;
+  margin-bottom: 1%;
+  padding: 0.7em;
+  margin-left: 1%;
+  margin-right: 1%;
+  border-radius: 0.5em;
+  margin-bottom: 2%;
+  background-color: rgba(4, 167, 167, 0.164);
+}
+
+h2 {
+  font-size: 4vmin;
+  margin: 60px 0 50px 0;
+}
+
+.showImage {
+  width: 65%;
+}
+
+
+
+
+/*  LISTAGEM DE 3 OPCOES CSS */
+
+.showOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 70%;
+}
+.showOptions button {
+  width: 30%;
+  margin: 10px;
+  text-align: center;
+  height: 9vmin;
+  font-size: 20px;
+  font-style: bold;
+  border: none;
+  border-radius: 5vmin;
+  align-self: center;
+  background-color: #28a745;
+  color: white;
+}
+.showOptions button:hover{
+  background-color: #276e30;
+  transition:100ms
+}
+
+/* FIM */
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
-  color: #61dafb;
+  color: #eb240a;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+a:link {
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+@media (max-width:1024px) {
+  article {
+    width: 30%;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width:750px) {
+  article {
+    width: 40%;
   }
+
+  main {
+    flex-direction: column;
+  }
+
+  #menu-principal ul {
+    flex-direction: column;
+  }
+}
+
+@media (max-width:400px) {
+  article {
+    width: 100%;
+  }
+}
+
+.topHome{
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 23px;
+  justify-content: center;
+  margin-left: 8%;
+  margin-right: 8%;
+}
+
+.topHome div{
+  display: inline-block;
+  width: 33%;
+  box-sizing: border-box;
+  border-bottom: 4.5px solid rgba(121, 121, 121, 0.377);
+  border-radius: 130%;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+  border-top: 1px solid rgba(117, 117, 117, 0.082);
+}
+
+.topHome img{
+  width: auto;
+  height: 270px;
+  border-radius: 10%;
+}
+
+.containerRecomendacoes{
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 10px;
+  font-style: italic;
+  justify-content: center;
+}
+
+.recomendacoes {
+  width: 20%
 }

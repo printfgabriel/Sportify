@@ -1,0 +1,25 @@
+
+
+.mostrarTop{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 12vmin 10vmin 0 12vmin;
+}
+.retorno{
+    display: inline-block;
+    width: 30%;
+    box-sizing: border-box;
+    margin-top: 5vmin;
+    margin-bottom: 1%;
+    padding: 0.75em;
+    margin-left: 1%;
+    margin-right: 1%;
+    border-radius: 0.5em;
+    background-color: rgba(4, 167, 167, 0.377);
+    color: black;
+}
+
+.retorno img {
+    width: 30vmin;
+}

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Link } from 'react-router-dom';
 import Head from "../Header";
 
 
 function TopArtists() {
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
     return (
         <div className="App">

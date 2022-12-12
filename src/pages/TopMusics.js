@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "../Header";
 import { BrowserRouter as Link } from 'react-router-dom';
 
 
 
 function TopArtists() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
 
     return (

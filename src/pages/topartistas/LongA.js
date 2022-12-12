@@ -51,7 +51,7 @@ function LongA() {
         return artists.map(artist => (
             <article>
                 <p className="showName">{artist.name}</p>
-                {artist.images.length ? <img className="showImage" width={"40%"} src={artist.images[0].url} alt="" /> : <div>No Image</div>}
+                {artist.images.length ? <a href={artist.external_urls.spotify} target="_blank"><img className="showImage" width={"40%"} src={artist.images[0].url} alt="" /></a> : <div>No Image</div>}
             </article>
         ))
     }

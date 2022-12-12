@@ -52,7 +52,7 @@ function ShortM() {
         return artists.map(artist => (
             <article>
                 <p className="showName">{artists.indexOf(artist)+1}.  {artist.name}</p>
-                {artist.album.images.length ? <img className="showImage" width={"40%"} src={artist.album.images[0].url} alt="" /> : <div>No Image</div>}
+                {artist.album.images.length ? <a href={artist.external_urls.spotify} target="_blank"><img className="showImage" width={"40%"} src={artist.album.images[0].url} alt="" /></a> : <div>No Image</div>}
             </article>
         ))
     }

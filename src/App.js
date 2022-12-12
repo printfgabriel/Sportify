@@ -6,7 +6,6 @@ import Login from "./pages/Login.js"
 import Home from "./pages/Home.js"
 import TopArtists from "./pages/TopArtists"
 import TopMusics from "./pages/TopMusics"
-import Statistics from './pages/statistics';
 import Short from './pages/topartistas/ShortA';
 import MediumA from './pages/topartistas/MediumA';
 import LongA from './pages/topartistas/LongA';
@@ -35,8 +34,6 @@ function App() {
           <Route path="/topmusics/short" element={<ShortM />} />
           <Route path="/topmusics/medium" element={<MediumM />} />
           <Route path="/topmusics/long" element={<LongM />} />
-
-          <Route path="/statistics" element={<Statistics />} />
 
         </Routes>
     </Router>

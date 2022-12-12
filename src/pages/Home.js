@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import "../App.css";
 import "../head.css";
 import Head from "../Header";
-import { RadialChart } from 'react-vis';
+import { RadialChart, PolygonSeries, LabelSeries } from 'react-vis';
 
 
 
@@ -15,6 +15,7 @@ function MainPage() {
 
     useEffect(() => {
 
+        window.scrollTo(0, 0)
         const hash = window.location.hash
         let tok = window.localStorage.getItem("token")
 
@@ -35,36 +36,6 @@ function MainPage() {
 
 
 
-    // I -- MOSTRA TODAS SUAS PLAYLISTS
-    const [playlists, setPlaylists] = useState([])
-
-    const searchPlaylists = async (e) => {
-        // e.preventDefault()
-        const { data } = await axios
-            .get(
-                'https://api.spotify.com/v1/me/playlists', {
-                params: { offset: 0 },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + token,
-                },
-            })
-
-        setPlaylists(data.items)
-        // try { console.log(data) } catch (error) { console.log(error); }
-    }
-
-    const renderPlaylists = () => {
-        return playlists.map(playlist => (
-            <article>
-                <p className="showName">{playlist.name}</p>
-                {playlist.images.length ? <img className="showImage" width={"40%"} src={playlist.images[0].url} alt="" /> : <div>No Image</div>}
-            </article>
-        ))
-    }
-    // F -- MOSTRA TODAS SUAS PLAYLISTS
-
 
     // I -- MOSTRA TOP 3 ARTISTAS
     const [artists, setArtists] = useState([])
@@ -83,16 +54,16 @@ function MainPage() {
         })
         setArtists(data.items);
         generosCalc(data.items);
-        // console.log(data.items)
+
         const id_first = (data.items[0].id)
-        fetchRecom(data.items[0].id+"%2C"+data.items[1].id);
+        fetchRecom(data.items[0].id + "%2C" + data.items[1].id);
     }
 
     const renderTop3Artists = () => {
         return artists.slice(0, 3).map(artist => (
             <div>
                 <p className="showName">{artist.name}</p>
-                {artist.images.length ? <img className="showImage" width={"40%"} src={artist.images[0].url} alt="" /> : <div>No Image</div>}
+                {artist.images.length ? <a href={artist.external_urls.spotify} target="_blank"><img className="showImage" width={"40%"} src={artist.images[0].url} alt="" /></a> : <div>No Image</div>}
             </div>
         ))
     }
@@ -119,8 +90,8 @@ function MainPage() {
     const renderTopTracks = () => {
         return tracks.map(artist => (
             <div>
-                <p className="showName">  {artist.name}</p>
-                {artist.album.images.length ? <img className="showImage" width={"40%"} src={artist.album.images[0].url} alt="" /> : <div>No Image</div>}
+                <p> {artist.name}</p>
+                {artist.album.images.length ? <a href={artist.external_urls.spotify} target="_blank"><img width={"40%"} src={artist.album.images[0].url} alt="" /></a> : <div>No Image</div>}
             </div>
         ))
     }
@@ -188,37 +159,74 @@ function MainPage() {
 
     }
 
+    const [totalAngle, setTA] = useState(0);;
+
     const sortDesc = (data) => {
 
         let result = data;
+        let saveTotal = 0;
 
         for (let i = 0; i < result.length; i++) {
             for (let j = i + 1; j < result.length; j++) {
-
                 if (result[j].angle > result[i].angle) {
                     let aux = result[i];
                     result[i] = result[j];
                     result[j] = aux;
                 }
             }
+
+            saveTotal += result[i].angle;
         }
 
+        setTA(saveTotal);
 
         // return (result.slice(0, 5));
         return data;
     }
 
+    // F -- CALCULAR GENEROS
+
+
+
+
+    // I -- FAZER GRÁFICOS
+
     const renderChart = () => {
 
-        return (
-            <div className="centralizar">
-                {/* {genero.label} {genero.angle} */}
-                <RadialChart animation data={generos} width={300} height={300} showLabels={true} />
+
+        return generos.slice(0, 3).map(genre => (
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                <RadialChart
+                    className={'grafico'}
+                    innerRadius={90}
+                    radius={130}
+                    getAngle={d => d.theta}
+                    data={[{ theta: genre.angle, color: '#1ed760' }, { theta: (totalAngle - genre.angle), color: '#0000001f' }]}
+                    width={300}
+                    height={300}
+                    padAngle={0.04}
+                    colorType="literal"
+                    center={{ x: 0, y: 0 }}
+
+                />
+                <div style={{
+                    position: 'absolute',
+                    padding: '5px',
+                    'font-size': '20px',
+                }}>
+                    {genre.label.toUpperCase()}
+                </div>
             </div>
-        )
+        ))
 
     }
-    // F -- CALCULAR GENEROS
+    // F -- FAZER GRÁFICOS
+
 
     // I -- PEGAR RECOMENDAÇÕES
 
@@ -239,10 +247,8 @@ function MainPage() {
     // get += seed;
 
     const fetchRecom = async (id_seed) => {
-        seed += id_seed + '&max_popularity=30';
+        seed += id_seed + '&max_popularity=35&min_popularity=20';
         get += seed;
-        console.log(get);
-        console.log("START fetching rec")
         const data = await axios
             .get(
                 get, {
@@ -263,17 +269,20 @@ function MainPage() {
             })
 
 
-        try { console.log(data.data.tracks) } catch (err) { console.log(err) }
+        try { } catch (err) { console.log(err) }
 
         setRec(data.data.tracks);
+        console.log(data.data.tracks[0].external_urls.spotify)
     }
 
     const renderRecommendations = () => {
         return recommendations.slice(0, 5).map(artist => (
-            <div class="recomendacoes">
+            // <div className="recomendacoes">
+            <article>
                 <p className="showName">{artist.name}</p>
-                {artist.album.images.length ? <img className="showImage" width={"40%"} src={artist.album.images[0].url} alt="" /> : <div>No Image</div>}
-            </div>
+                {artist.album.images.length ? <a href={artist.external_urls.spotify} target="_blank"><img className="showImage" src={artist.album.images[0].url} alt="" /></a> : <div>No Image</div>}
+            </article>
+            // </div>
         ))
     }
 
@@ -297,14 +306,20 @@ function MainPage() {
 
 
                 <h2>Estatísticas</h2>
-                {renderChart()}
+                <p className="textinho">Estes foram seus gêneros mais ouvidos este mês:</p>
+                <div className={"containerRecomendacoes"} >
+                    {renderChart()}
+                </div>
+
+
 
                 <br />
                 <h2>Recomendações</h2>
-                <div class="containerRecomendacoes">
+                <p className="textinho">Aqui estão algumas recomendações para você curtir no próximo mês:</p>
+                <div className="containerRecomendacoes">
                     {renderRecommendations()}
                 </div>
-                <br /><br /><br /><br />aaaa<br />          <br />https://developer.spotify.com/documentation/web-api/reference/#/operations/get-recommendations
+
 
 
             </main>

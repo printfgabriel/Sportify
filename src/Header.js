@@ -17,7 +17,6 @@ function Head() {
                     <li><Link to="/home">Home</Link></li>
                     <li><Link to="/topartists">Top Artistas</Link></li>
                     <li><Link to="/topmusics">Top Músicas</Link></li>
-                    <li><Link to="/statistics">Estatísticas</Link></li>
                 </ul>
             </div>
         </header >

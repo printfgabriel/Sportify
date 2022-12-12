@@ -5,7 +5,7 @@ header {
     align-items: center;
     justify-content: center;
     background-color: #0052f5;
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
     min-height: 12vmin;
     height: 14vmin;
